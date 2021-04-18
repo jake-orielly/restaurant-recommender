@@ -1,11 +1,12 @@
 from flask import Flask, request
+from flask_cors import CORS
 import requests as r
 import json
 
 app = Flask(__name__)
+CORS(app)
 
-base_url = 'https://api.yelp.com/v3'
-
+yelp_url = 'https://api.yelp.com/v3'
 
 with open("../credentials/bearer_token.txt") as file:
    bearer_token = file.read()
@@ -17,7 +18,7 @@ def status():
 @app.route('/restaurants')
 def restaurants():
     zipcode = request.args.get('zipcode')
-    url = base_url + f"/businesses/search?location={zipcode}&open_now=true&limit=50"
+    url = yelp_url + f"/businesses/search?location={zipcode}&open_now=true&limit=50"
 
     payload={}
     headers = {
